@@ -311,7 +311,7 @@ body{
     opacity: 0.2;
     position: absolute;
     width: 180%;
-    top: 25%;
+    top: 20%;
     left: -40%;
     animation: fade-in-mobile 1s ease-out;
   }
@@ -320,7 +320,7 @@ body{
     max-width: 300px;
     font-size: 1.5rem;
     position: absolute;
-    top: 40%;
+    top: 35%;
     left: 10%;
     color: var(--white);
     
