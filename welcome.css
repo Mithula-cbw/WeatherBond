@@ -96,15 +96,18 @@ body{
   height: auto;
   top: 5%;
   left: 15%;
+  opacity: 0.8;
   animation: fade-in 1.5s ease-out;
 }
 
 #cloud-text {
+  top: 40%;
+  left: 30%;
   color: #FE7994;
   z-index: 10;
   width: fit-content;
   font-family: var(--main-font);
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   position: absolute; /* Add this line */
   display: flex;
@@ -131,14 +134,14 @@ body{
 
 .btn{
   border: none;
-  padding: 10px 20px;
+  padding: 12px 24px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   opacity: 1;
   cursor: pointer;
-  gap: 10px;
+  gap: 12px;
 }
 
 #Download-app{
@@ -147,6 +150,7 @@ body{
 
 #Download-app:hover{
   background-color:#eea73d;
+  color: var(--white);
 }
 
 .icon-1 {
@@ -202,7 +206,7 @@ body{
   }
 
   100%{
-    opacity: 1;
+    opacity: 0.8;
     transform: translateY(0);
   }
 }

@@ -14,3 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelector('.cloud-container').classList.remove('hidden');
         }, 4500);
 });
+
+const DownloadApp = document.getElementById('Download-app');
+const onlineApp = document.getElementById('online-app');
+
+DownloadApp.addEventListener("click", ()=>{
+    alert("Our Android app is still in development. In the meantime, please use the online version.");
+
+});
