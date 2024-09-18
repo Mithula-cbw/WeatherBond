@@ -106,7 +106,10 @@ async function fetchCities(query, countryCode) {
 
 function showCountryAutocomplete(countries) {
     countryAutocompleteList.innerHTML = ''; // Clear previous suggestions
-    countries.forEach(country => {
+    const maxResults = 5; // Maximum number of results to show
+
+    // Loop through the countries, but only display up to 10 results
+    countries.slice(0, maxResults).forEach(country => {
         const div = document.createElement('div');
         div.className = 'autocomplete-item';
         div.innerText = country.name;
@@ -120,6 +123,8 @@ function showCountryAutocomplete(countries) {
         countryAutocompleteList.appendChild(div);
     });
 }
+
+
 
 function showCityAutocomplete(cities) {
     cityAutocompleteList.innerHTML = ''; // Clear previous suggestions

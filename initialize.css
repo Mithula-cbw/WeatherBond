@@ -139,28 +139,34 @@ body{
 }
 
 .my-input {
-    width: 50%;
-    margin-top: 150px;
-    padding: 8px;
+    width: 80%;
+    margin-top: 120px;
+    margin: auto;
+    padding: 12px 18px;
     box-sizing: border-box;
+    background-color: var(--white-200);
+    border: none;
+    box-shadow: 2px 2px 5px 1px var(--black-100);
+    border-radius: 20px;
 }
 
 .autocomplete-items {
-    border: 1px solid #ddd;
-    z-index: 99;
-    background-color: white;
-    max-height: 200px;
-    overflow-y: auto;
-    width: 50%;
+    z-index: 199;
+    background-color:var(--white-400);
+    max-height: 212px;
+    overflow-y: visible;
+    width: 70%;
 }
 
 .autocomplete-item {
     padding: 8px;
     cursor: pointer;
+    color: var(--black-400);
+    border-bottom: 1px solid rgba(159, 159, 159, 0.148);
 }
 
 .autocomplete-item:hover {
-    background-color: #ddd;
+    background-color: var(--white);
 }
 
 .location{
@@ -173,12 +179,14 @@ body{
 #location2{
     top: -12%;
     left: 20%;
+    animation: slide-in-left 2s ease-out;
 }
 
 #location1{    
     width: 120px;
     bottom:-10px;
     right:20%;
+    animation: slide-in-right 2s ease-out;
 }
        
 @media (max-width: 1000px) {
@@ -199,6 +207,10 @@ body{
     #container{
        width: 100%;
     }
+
+    .my-input {
+        margin-top: 200px;
+    }
     .location{
         position: fixed;
         z-index: 120;
@@ -214,6 +226,28 @@ body{
     #location1{
         bottom:-10px;
         right:0;
+    }
+   }
+
+   @keyframes slide-in-left{
+    0%{
+        transform: translateX(-150%);
+        opacity: 0.2;
+    }
+    100%{
+        transform: translate(0);
+        opacity: 1;
+    }
+   }
+
+   @keyframes slide-in-right{
+    0%{
+        transform: translateX(150%);
+        opacity: 0.2;
+    }
+    100%{
+        transform: translate(0);
+        opacity: 1;
     }
    }
 
