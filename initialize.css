@@ -27,7 +27,7 @@ body{
     width: 100dvw;
     height: 100dvh;
     overflow: hidden;
-    background-color: #121316;   
+    background-color: #4c4c4cb7;   
     
 }
 
@@ -56,7 +56,8 @@ body{
     width: 60%;
     height: 100%;
     margin: auto;
-    background-color: #343d4bcf;
+    background-color:#FFFFCC;
+    box-shadow: 0px 0px 20px 1px var(--black-100);
     position: relative;
     display: flex;
     flex-direction: column;
@@ -78,7 +79,7 @@ body{
     font-family: var(--sec-font);
     font-size: 900;
     font-size: 24px;
-    color: var(--white);
+    color: var(--black);
 }
 
 #sub-title{
@@ -88,7 +89,7 @@ body{
     font-family: var(--sec-font);
     font-size: bolder;
     font-size: 18px;
-    color: var(--white-300);
+    color: var(--black-200);
 }
 
 .content{
@@ -114,11 +115,13 @@ body{
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    color: var(--white);
+    background-color: var(--black-300);
 
 }
 
 #next:hover{
-    background-color: aqua;
+    background-color: var(--black-400);
     color: var(--white);
 }
        
