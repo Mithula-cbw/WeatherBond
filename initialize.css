@@ -93,10 +93,10 @@ body{
 }
 
 .content{
-    position: absolute;
     width: 100%;
-    top: 20%;
-    bottom: 20%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
 }
 
 .footer{
@@ -124,15 +124,96 @@ body{
     background-color: var(--black-400);
     color: var(--white);
 }
+
+.search-panel {
+    width: 80%;
+    height: 60%;
+    margin: auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--white-200);
+    border-radius: 20px;
+    box-shadow: 2px 2px 12px 1px var(--black-100) ;
+}
+
+.my-input {
+    width: 50%;
+    margin-top: 150px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.autocomplete-items {
+    border: 1px solid #ddd;
+    z-index: 99;
+    background-color: white;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 50%;
+}
+
+.autocomplete-item {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.autocomplete-item:hover {
+    background-color: #ddd;
+}
+
+.location{
+    position: fixed;
+    z-index: 120;
+    width: 180px;
+    height: auto;
+}
+
+#location2{
+    top: -12%;
+    left: 20%;
+}
+
+#location1{    
+    width: 120px;
+    bottom:-10px;
+    right:20%;
+}
        
 @media (max-width: 1000px) {
  #container{
     width: 70%;
  }
+
+ #location2{
+    left: 15%;
+}
+
+#location1{    
+    right:15%;
+}
 }
 
 @media (max-width: 600px) {
     #container{
        width: 100%;
     }
+    .location{
+        position: fixed;
+        z-index: 120;
+        width: 140px;
+        height: auto;
+    }
+
+    #location2{
+        top: 5%;
+        left: 0;
+    }
+    
+    #location1{
+        bottom:-10px;
+        right:0;
+    }
    }
+
