@@ -64,6 +64,7 @@ body{
 }
 
 .header{
+    margin-top: 40px;
     width: 100%;
     justify-content: center;
     gap: 10px;
