@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
             entry.classList.remove("hidden");
         });
         document.querySelector('.cloud-container').classList.remove('hidden');
-        }, 4500);
+        }, 5000);
 });
 
 const DownloadApp = document.getElementById('Download-app');
@@ -22,3 +22,8 @@ DownloadApp.addEventListener("click", ()=>{
     alert("Our Android app is still in development. In the meantime, please use the online version.");
 
 });
+
+onlineApp.addEventListener("click", () => {
+    window.location.href = "initialize.html";
+});
+

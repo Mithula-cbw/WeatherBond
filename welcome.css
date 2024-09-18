@@ -41,7 +41,7 @@ body{
  color: var(--white);
  font-family: var(--main-font);
  text-align: center;
- animation: mash-out 0.5s ease-out;
+ animation: mash-out 1s ease-in-out;
  animation-delay: 4.5s;
 }
 
