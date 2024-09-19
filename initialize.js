@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // },3000);
 });
 
+
 let countryInput, cityInput, countryAutocompleteList, cityAutocompleteList;
 let selectedCountryCode = '';
 
@@ -24,28 +25,35 @@ function initializeUser(){
     userPanel.className = 'search-panel';
 
     // User info
-    const genderContainer = createElement('div', 'gender-container');
+     const genderContainer = createElement('div', 'switch-toggle');
 
-    // Female user 
-    const female = createElement('div', 'gender-option female');
-    const femaleSvg = createElement('div');
+    // // Female user 
+     const genderCheckBox = createElement('input','switch-toggle-checkbox');
+     genderCheckBox.type ='checkbox';
+     genderCheckBox.id ='gender-switch';
+
+    const genderToggleLabel = createElement('label','switch-toggle-label');
+    genderToggleLabel.for ='gender-switch';
+     
+     const femaleSvg = createElement('span','toggle-span');
     femaleSvg.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gender-female" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8M3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5"/>
-        </svg>`;
-    female.appendChild(femaleSvg);
+             <path fill-rule="evenodd" d="M8 1a4 4 0 1 0 0 8 4 4 0 0 0 0-8M3 5a5 5 0 1 1 5.5 4.975V12h2a.5.5 0 0 1 0 1h-2v2.5a.5.5 0 0 1-1 0V13h-2a.5.5 0 0 1 0-1h2V9.975A5 5 0 0 1 3 5"/>
+        </svg> Female`;
+    genderToggleLabel.appendChild(femaleSvg);
 
-    // Male user
-    const male = createElement('div', 'gender-option male');
-    const maleSvg = createElement('div');
+    // // Male user
+    
+    const maleSvg = createElement('span','toggle-span');
     maleSvg.innerHTML = `
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gender-male" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M9.5 2a.5.5 0 0 1 0-1h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.707L9.871 6.836a5 5 0 1 1-.707-.707L13.293 2zM6 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8"/>
-        </svg>`;
-    male.appendChild(maleSvg);
+        </svg> Male`;
+    genderToggleLabel.appendChild(maleSvg);
 
-    genderContainer.appendChild(female);
-    genderContainer.appendChild(male);
+    genderContainer.appendChild(genderCheckBox);
+    genderContainer.appendChild(genderToggleLabel);
+
 
     // Name input with label
     const nameContainer = createElement('div', 'name-container');
@@ -75,8 +83,11 @@ function initializeUser(){
     userPanel.appendChild(genderContainer);
  
     content.appendChild(userPanel);
+
+    
     
 }
+
 
 
 function initializeSearch() {
