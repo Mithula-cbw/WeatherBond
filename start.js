@@ -288,11 +288,11 @@ function firstNext(){
             content.style.animation = "none";
             content.offsetHeight;
             content.style.animation ='slide-in-right 1s';
-        },900);
+        },600);
         
         setTimeout(()=>{
             getInfoTwo();
-        },700);
+        },300);
         
        
     }else{
