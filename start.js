@@ -565,8 +565,8 @@ function firstNext(){
 }
 
 function SecondNext(){
-    
-    if(personOne.code !== '' && personOne.city !== ''){
+    //&& personOne.city !== ''
+    if(personOne.code !== ''){
         console.log("you are good to go");
         const content = document.getElementById('content');
 
