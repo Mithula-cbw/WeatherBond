@@ -24,6 +24,6 @@ DownloadApp.addEventListener("click", ()=>{
 });
 
 onlineApp.addEventListener("click", () => {
-    window.location.href = "initialize.html";
+    window.location.href = "start.html";
 });
 
