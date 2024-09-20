@@ -338,17 +338,32 @@ ul {
     align-items: center;
 }
 
+.city-input-container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -20px;
+}
+
+
+
 .my-input {
     width: 80%;
     margin-top: 120px;
     margin: auto;
     padding: 12px 18px;
     box-sizing: border-box;
-    background-color: var(--white-200);
+    background-color: var(--white-300);
     border: none;
     box-shadow: 2px 2px 5px 1px var(--black-100);
     border-radius: 20px;
     font-family: var(--sec-font);
+}
+
+#my-input:active{
+    background-color: var(--white);
 }
 
 #city-input {
@@ -377,8 +392,14 @@ ul {
     background-color: var(--white);
 }
 
+.autocomplete-item.autocomplete-active {
+    background-color: #e9e9e9;
+    cursor: pointer;
+}
+
+
 .location-one-label-container{
-    margin-top: 25%;
+    margin-top: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -406,19 +427,19 @@ ul {
 .location{
     position: fixed;
     z-index: 120;
-    width: 140px;
+    width: 120px;
     height: auto;
 }
 
 #location2{
-    top: 0;
-    left: -20px;
+    top: 30px;
+    left: 0;
     animation: slide-in-left 2s ease-out;
     }
 
 #location1{    
-    width: 120px;
-    bottom:-10px;
+    width: 100px;
+    bottom:0;
     right:0;
     animation: slide-in-right 2s ease-out;
 }

@@ -1,19 +1,26 @@
 const personOne ={
-    'name':"",
+    'name':"Mithula",
     'gender':"male",
-    'location': ""
+    'country': "",
+    'code':'',
+    'city':''
 }
 
 const personTwo ={
     'name':"",
     'gender':"female",
-    'location': ""
+    'country': "",
+    'code':'',
+    'city':''
 }
 
 localStorage.setItem('personOne', JSON.stringify(personOne));
 localStorage.setItem('personTwo', JSON.stringify(personTwo));
 
 let nextBtnI = 0;
+const apiKey = 'f90944973222ee9a70511676c51fdb77'; // Replace with your OpenWeather API key
+let countryInput, cityInput, countryAutocompleteList, cityAutocompleteList;
+let selectedCountryCode = '';
 
 // n is the dot number
 function sliderUpdate(n){
@@ -264,19 +271,26 @@ function getLocationOne() {
     profilePicture.src = 'profile.webp';
     profilePicture.className = 'profile-picture';
     profilePicture.alt = 'Profile Picture';
-
+   
     const locationOneLabelContainer = createElement('div','location-one-label-container');
     const locationOneLabel = createElement('p','location-label');
     const locationOneSubLabel = createElement('p','location-sub-label');
     const profileOneNameElement = createElement('p','profileName');
     
     const profileOne = JSON.parse(localStorage.getItem('personOne'));
-
-    profileOneNameElement.innerText = profileOne.name || '';
-
-    locationOneLabel.innerText = "Let's find your city";
-    locationOneSubLabel.innerText = "Please select your country first";
+    const profileTwo = JSON.parse(localStorage.getItem('personTwo'));
     
+    if(nextBtnI === 1){
+        profileOneNameElement.innerText = `Hey, ${profileOne.name}` || '';
+    } else if(nextBtnI === 3){
+        profileOneNameElement.innerText = `Hey, ${profileTwo.name}` || '';
+    }else{
+        profileOneNameElement.innerText = '';
+    }
+    
+    locationOneLabel.innerText = `Let's find your city`;
+    locationOneSubLabel.innerText = "Please select your country first";
+    locationOneSubLabel.id = 'location-sub-label';
     locationOneLabelContainer.appendChild(profilePicture);
     
     if(profileOneNameElement.innerText !== ''){
@@ -288,13 +302,13 @@ function getLocationOne() {
 
     // Country search panel
     const countryInputContainer = createElement('div','country-input-container')
-    const countryInput = document.createElement('input');
+    countryInput = document.createElement('input');
     countryInput.className = 'my-input';
     countryInput.id = 'country-input';
     countryInput.type = 'text';
     countryInput.placeholder = 'Search for a country...';
 
-    const countryAutocompleteList = document.createElement('div');
+    countryAutocompleteList = document.createElement('div');
     countryAutocompleteList.id = 'country-autocomplete-list';
     countryAutocompleteList.className = 'autocomplete-items';
 
@@ -303,25 +317,186 @@ function getLocationOne() {
     content.appendChild(countryInputContainer);
 
     // City search panel
-    const cityInputContainer = createElement('div','country-input-container');
-    const cityInput = document.createElement('input');
+    const cityInputContainer = createElement('div','city-input-container');
+    cityInput = document.createElement('input');
     cityInput.className = 'my-input';
     cityInput.id = 'city-input';
     cityInput.type = 'text';
     cityInput.placeholder = 'Search for a city...';
     cityInput.disabled = true;
 
-    const cityAutocompleteList = document.createElement('div');
+    cityAutocompleteList = document.createElement('div');
     cityAutocompleteList.id = 'city-autocomplete-list';
     cityAutocompleteList.className = 'autocomplete-items';
 
     cityInputContainer.appendChild(cityInput);
     cityInputContainer.appendChild(cityAutocompleteList);
     content.appendChild(cityInputContainer);
+
+    // Event listeners
+  // Event listeners
+  countryInput.addEventListener('input', async (event) => {
+    const query = event.target.value;
+
+    if(countryInput.value === ''){
+        cityInput.value = '';
+        cityInput.disabled = true;
+    }
+
+    if (query.length > 0) { // Start searching after 1 characters
+        const countries = await fetchCountries(query); // Fetch countries from API
+        showCountryAutocomplete(countries);
+    } else {
+        countryAutocompleteList.innerHTML = ''; // Clear suggestions if query is too short
+    }
+});
+
+cityInput.addEventListener('input', async (event) => {
+    const query = event.target.value;
+    if (query.length > 0 && selectedCountryCode) { // Check if country is selected
+        const cities = await fetchCities(query, selectedCountryCode); // Fetch cities from API
+        showCityAutocomplete(cities);
+    } else {
+        cityAutocompleteList.innerHTML = ''; // Clear suggestions if query is too short or no country is selected
+    }
+});
+}
+
+//main function fetch
+async function fetchCountries(query) {
+    try {
+        const response = await fetch(`https://restcountries.com/v3.1/all`);
+        const data = await response.json();
+        const countries = data
+            .filter(country => country.name.common.toLowerCase().includes(query.toLowerCase()))
+            .map(country => ({
+                name: country.name.common,
+                code: country.cca2.toLowerCase()
+            }));
+        return countries;
+    } catch (error) {
+        console.error('Error fetching countries:', error);
+    }
+}
+
+async function fetchCities(query, countryCode) {
+    try {
+        const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=10&appid=${apiKey}`);
+        const data = await response.json();
+        // console.log('API Response:', data); // Log response for debugging
+        const cities = data
+            .filter(location => location.country.toLowerCase() === countryCode)
+            .map(location => ({
+                name: location.name,
+                country: location.country
+            }));
+        console.log('Filtered Cities:', cities); // Log filtered cities for debugging
+        return cities;
+    } catch (error) {
+        console.error('Error fetching cities:', error);
+    }
 }
 
 
+//main functions for showing suggestions
 
+let currentFocus = -1; //for key navigation
+
+function showCountryAutocomplete(countries) {
+    countryAutocompleteList.innerHTML = ''; // Clear previous suggestions
+    const maxResults = 5; 
+
+    // Loop through the countries, but only display up to 10 results
+    countries.slice(0, maxResults).forEach(country => {
+        const div = document.createElement('div');
+        div.className = 'autocomplete-item';
+        div.innerText = country.name;
+        div.addEventListener('click', () => {
+            selectedCountryCode = country.code; // Save selected country code
+            countryInput.value = country.name;
+            if(nextBtnI === 1){
+                personOne.country = country.name;
+                personOne.code = country.code;
+            } else if(nextBtnI === 3){
+                personTwo.country = country.name;
+                personTwo.code = country.code;
+            }
+            countryAutocompleteList.innerHTML = ''; // Clear suggestions
+           // document.querySelector('.search-panel:nth-child(2)').style.display = 'block'; // Show city search panel
+            cityInput.disabled = false;
+
+            const locSubLabel = document.getElementById('location-sub-label');
+
+            locSubLabel.innerText = `Please enter the full name of the city`;
+
+            cityInput.focus(); 
+            // console.log(personTwo);
+            console.log(selectedCountryCode);
+            
+        });
+        countryAutocompleteList.appendChild(div);
+    });
+
+    countryInput.addEventListener('keydown', function(e) {
+        const items = document.querySelectorAll('.autocomplete-item');
+        if (e.key === 'ArrowDown') {
+            currentFocus++;
+            addActive(items);
+        } else if (e.key === 'ArrowUp') {
+            currentFocus--;
+            addActive(items);
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (currentFocus > -1) {
+                if (items[currentFocus]) {
+                    items[currentFocus].click();
+                }
+            }
+        }
+    });
+}
+
+//related functions of keydown event listner
+
+function addActive(items) {
+    if (!items) return false;
+    removeActive(items);
+    if (currentFocus >= items.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = items.length - 1;
+    items[currentFocus].classList.add('autocomplete-active');
+}
+
+function removeActive(items) {
+    items.forEach(item => item.classList.remove('autocomplete-active'));
+}
+
+function selectCountry(country) {
+    selectedCountryCode = country.code; // Save selected country code
+    countryInput.value = country.name;
+    countryAutocompleteList.innerHTML = ''; // Clear suggestions
+    cityInput.disabled = false;
+    cityInput.focus();
+    console.log(`Selected Country: ${country.name}, Code: ${country.code}`);
+}
+
+function showCityAutocomplete(cities) {
+    cityAutocompleteList.innerHTML = ''; // Clear previous suggestions
+    cities.forEach(city => {
+        const div = document.createElement('div');
+        div.className = 'autocomplete-item';
+        div.innerText = `${city.name}, ${city.country}`;
+        div.addEventListener('click', () => {
+            cityInput.value = `${city.name}, ${city.country}`;
+            cityAutocompleteList.innerHTML = ''; 
+            if(nextBtnI === 1){
+                personOne.city = city.name;
+            } else if(nextBtnI === 3){
+                personTwo.city = city.name;
+            }
+        });
+        cityAutocompleteList.appendChild(div);
+    });
+}
 
 
 
@@ -344,6 +519,7 @@ switch(nextBtnI){
         break;
     case 2:
         console.log("third click");
+        ThirdNext();
         nextBtnI++;
         break;
     case 3:
@@ -372,7 +548,7 @@ function firstNext(){
         },600);
         
         setTimeout(()=>{
-            getInfoTwo();
+            getLocationOne();
         },300);
         
        
@@ -389,6 +565,61 @@ function firstNext(){
 }
 
 function SecondNext(){
+    
+    if(personOne.code !== '' && personOne.city !== ''){
+        console.log("you are good to go");
+        const content = document.getElementById('content');
+
+        //local storage
+        localStorage.setItem('personOne', JSON.stringify(personOne));
+        console.log(localStorage.getItem('personOne'));
+        content.innerHTML='';
+        content.style.animation ='slid-away-left 1s';
+
+        const locationBanners = document.querySelectorAll('.location');
+
+        locationBanners.forEach(locale =>{
+            locale.style.animation = "none";
+            locale.offsetHeight;
+            locale.style.animation ='slide-in-right 1s';
+
+            setTimeout(()=>{
+                locale.remove()
+            },100);
+        })
+
+  
+        setTimeout(()=>{
+            content.style.animation = "none";
+            content.offsetHeight;
+            content.style.animation ='slide-in-right 1s';
+        },600);
+        
+        setTimeout(()=>{
+            getInfoTwo();
+        },300);
+        
+    }else if(personOne.code === ''){
+        const countryInputField = document.getElementById('country-input');
+
+        countryInputField.style.animation = "none";
+        countryInputField.offsetHeight; // Trigger reflow
+        countryInputField.style.animation = "vibrate 0.2s ";
+        console.log("please select a country");
+        nextBtnI = 1;
+    }else{
+        const cityInputField = document.getElementById('city-input');
+
+        cityInputField.style.animation = "none";
+        cityInputField.offsetHeight; // Trigger reflow
+        cityInputField.style.animation = "vibrate 0.2s ";
+        console.log("please select a country");
+        nextBtnI = 1;
+    }
+    
+}
+
+function ThirdNext(){
     if(personTwo.name !== ''){
         console.log("you are good to go");
         const content = document.getElementById('content');
