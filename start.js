@@ -107,12 +107,12 @@ function getInfoOne(){
     content.appendChild(genderContainer);
 
 
-    const genderToggleBtn = document.getElementById('gender-toggle-btn');
+    const genderToggle= document.getElementById('gender-toggle');
     
 
     let isMale = true;
 
-    genderToggleBtn.addEventListener("click", () => {
+    genderToggle.addEventListener("click", () => {
         const genderFePart = document.getElementById('fe-part');
         const genderName = document.getElementById('gender-name');
 
@@ -219,7 +219,7 @@ let isMale = false; // Default to Female for personTwo
 
 
 
-genderToggleBtn.addEventListener("click", () => {
+genderToggle.addEventListener("click", () => {
     const genderFePart = document.getElementById('fe-part');
     const genderName = document.getElementById('gender-name');
 
@@ -285,8 +285,14 @@ function firstNext(){
         content.style.animation ='slid-away-left 1s';
         
         setTimeout(()=>{
+            content.style.animation = "none";
+            content.offsetHeight;
+            content.style.animation ='slide-in-right 1s';
+        },900);
+        
+        setTimeout(()=>{
             getInfoTwo();
-        },1500);
+        },700);
         
        
     }else{
@@ -310,7 +316,7 @@ function SecondNext(){
         localStorage.setItem('personTwo', JSON.stringify(personTwo));
         console.log(localStorage.getItem('personTwo'));
         content.innerHTML='';
-        content.style.animation ='slid-away-left 1.5s';
+        content.style.animation ='slid-away-left 1s';
         
     }else{
 
