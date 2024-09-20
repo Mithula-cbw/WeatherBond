@@ -281,9 +281,9 @@ function firstNext(){
         //local storage
         localStorage.setItem('personOne', JSON.stringify(personOne));
         console.log(localStorage.getItem('personOne'));
-
-        content.style.animation ='slid-away-left 1s';
         content.innerHTML='';
+        content.style.animation ='slid-away-left 1s';
+        
         setTimeout(()=>{
             getInfoTwo();
         },1500);
@@ -309,9 +309,9 @@ function SecondNext(){
         //local storage
         localStorage.setItem('personTwo', JSON.stringify(personTwo));
         console.log(localStorage.getItem('personTwo'));
-
-        content.style.animation ='slid-away-left 1.5s';
         content.innerHTML='';
+        content.style.animation ='slid-away-left 1.5s';
+        
     }else{
 
         const nameField = document.getElementById('name-input');
