@@ -105,10 +105,10 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 40px;
-    background-color: var(--white-200);
-    box-shadow: 0px 10px 20px 2px rgba(16, 39, 68, 0.1);
+    background-color: var(--white-300);
+    box-shadow: 2px 2px 12px 1px var(--black-100);
     border-radius: 20px;
 }
 
@@ -238,7 +238,8 @@ ul {
 }
 
  #gender-container{
-    margin-block: 15px;
+    margin-top: 10px;
+    margin-bottom: 60px;
     padding-right: 5px;
     display: flex;
     flex-direction: row;
@@ -295,6 +296,142 @@ ul {
     color:var(--gender-pink); 
     font-family: 'Roboto', sans-serif;
   }
+
+  /* //location */
+
+  /* Search Panel and Input Selectors */
+/* .search-panel {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--white-200);
+    border-radius: 20px;
+    box-shadow: 2px 2px 12px 1px var(--black-100);
+} */
+.profile-picture {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 2px 2px 5px 1px var(--black-100);
+    background-color: var(--gender-bg-blue);
+}
+
+.profileName{
+    font-family: var(--sec-font);
+    font-size: 14px;
+    color: var(--black-200);
+    margin-top: -10px;
+}
+
+
+.country-input-container{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+}
+
+.my-input {
+    width: 80%;
+    margin-top: 120px;
+    margin: auto;
+    padding: 12px 18px;
+    box-sizing: border-box;
+    background-color: var(--white-200);
+    border: none;
+    box-shadow: 2px 2px 5px 1px var(--black-100);
+    border-radius: 20px;
+    font-family: var(--sec-font);
+}
+
+#city-input {
+    margin-top: auto;
+}
+
+/* Autocomplete List Selectors */
+.autocomplete-items {
+    z-index: 199;
+    background-color: var(--white-400);
+    max-height: 212px;
+    color: var(--black-400);
+    overflow-y: visible;
+    width: 70%;    
+    font-family: var(--sec-font);
+}
+
+.autocomplete-item {
+    padding: 8px;
+    cursor: pointer;
+    color: var(--black-400);
+    border-bottom: 1px solid rgba(159, 159, 159, 0.148);
+}
+
+.autocomplete-item:hover {
+    background-color: var(--white);
+}
+
+.location-one-label-container{
+    margin-top: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.location-label{
+    margin-bottom: 0;
+    text-align: center;
+    font-family: var(--sec-font);
+    color: var(--black-300);
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.location-sub-label{
+    margin-top: -18px;
+    text-align: center;
+    font-family: var(--sec-font);
+    color: var(--black-200);
+    font-weight: 200px;
+    font-size: 12px;
+}
+
+.location{
+    position: fixed;
+    z-index: 120;
+    width: 140px;
+    height: auto;
+}
+
+#location2{
+    top: 0;
+    left: -20px;
+    animation: slide-in-left 2s ease-out;
+    }
+
+#location1{    
+    width: 120px;
+    bottom:-10px;
+    right:0;
+    animation: slide-in-right 2s ease-out;
+}
+
+.userImgLoc {
+    position: fixed;
+    z-index: 120;
+    width: 340px;
+    height: auto;
+    top: 20%;
+    left: calc(50% - 170px);
+}
+
 
 
 @media (max-width: 600px) {

@@ -243,6 +243,87 @@ genderToggle.addEventListener("click", () => {
 });  
 }
 
+function getLocationOne() {
+    sliderUpdate(2);
+    const content = document.getElementById('content');
+    content.innerHTML = ''; 
+    const body = document.querySelector('body');
+
+    const bannerElement1 = createElement('img', 'location animation-right');
+    bannerElement1.id = 'location1';
+    bannerElement1.src = 'location1.PNG';
+    
+    const bannerElement2 = createElement('img', 'location animation-right');
+    bannerElement2.id = 'location2';
+    bannerElement2.src = 'location2.PNG'; 
+    
+    body.appendChild(bannerElement1);
+    body.appendChild(bannerElement2);
+
+    const profilePicture = document.createElement('img');
+    profilePicture.src = 'profile.webp';
+    profilePicture.className = 'profile-picture';
+    profilePicture.alt = 'Profile Picture';
+
+    const locationOneLabelContainer = createElement('div','location-one-label-container');
+    const locationOneLabel = createElement('p','location-label');
+    const locationOneSubLabel = createElement('p','location-sub-label');
+    const profileOneNameElement = createElement('p','profileName');
+    
+    const profileOne = JSON.parse(localStorage.getItem('personOne'));
+
+    profileOneNameElement.innerText = profileOne.name || '';
+
+    locationOneLabel.innerText = "Let's find your city";
+    locationOneSubLabel.innerText = "Please select your country first";
+    
+    locationOneLabelContainer.appendChild(profilePicture);
+    
+    if(profileOneNameElement.innerText !== ''){
+        locationOneLabelContainer.appendChild(profileOneNameElement);
+    }
+    locationOneLabelContainer.appendChild(locationOneLabel);
+    locationOneLabelContainer.appendChild(locationOneSubLabel);
+    content.appendChild(locationOneLabelContainer);
+
+    // Country search panel
+    const countryInputContainer = createElement('div','country-input-container')
+    const countryInput = document.createElement('input');
+    countryInput.className = 'my-input';
+    countryInput.id = 'country-input';
+    countryInput.type = 'text';
+    countryInput.placeholder = 'Search for a country...';
+
+    const countryAutocompleteList = document.createElement('div');
+    countryAutocompleteList.id = 'country-autocomplete-list';
+    countryAutocompleteList.className = 'autocomplete-items';
+
+    countryInputContainer.appendChild(countryInput);
+    countryInputContainer.appendChild(countryAutocompleteList);
+    content.appendChild(countryInputContainer);
+
+    // City search panel
+    const cityInputContainer = createElement('div','country-input-container');
+    const cityInput = document.createElement('input');
+    cityInput.className = 'my-input';
+    cityInput.id = 'city-input';
+    cityInput.type = 'text';
+    cityInput.placeholder = 'Search for a city...';
+    cityInput.disabled = true;
+
+    const cityAutocompleteList = document.createElement('div');
+    cityAutocompleteList.id = 'city-autocomplete-list';
+    cityAutocompleteList.className = 'autocomplete-items';
+
+    cityInputContainer.appendChild(cityInput);
+    cityInputContainer.appendChild(cityAutocompleteList);
+    content.appendChild(cityInputContainer);
+}
+
+
+
+
+
 
 //other events
 
