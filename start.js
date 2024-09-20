@@ -519,7 +519,7 @@ switch(nextBtnI){
         break;
     case 2:
         console.log("third click");
-        ThirdNext();
+        // ThirdNext();
         nextBtnI++;
         break;
     case 3:
@@ -630,6 +630,17 @@ function ThirdNext(){
         content.innerHTML='';
         content.style.animation ='slid-away-left 1s';
         
+        setTimeout(()=>{
+            content.style.animation = "none";
+            content.offsetHeight;
+            content.style.animation ='slide-in-right 1s';
+        },600);
+        
+        setTimeout(()=>{
+            getLocationOne();
+        },300);
+        
+       
     }else{
 
         const nameField = document.getElementById('name-input');
@@ -638,7 +649,7 @@ function ThirdNext(){
         nameField.offsetHeight; // Trigger reflow
         nameField.style.animation = "vibrate 0.2s ";
         console.log("please fill the name");
-        nextBtnI = 1;
+        nextBtnI = 2;
     }
 }
 
