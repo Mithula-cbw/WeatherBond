@@ -1,18 +1,21 @@
-const personOne ={
-    'name':"Mithula",
-    'gender':"male",
+const personOne = {
+    'name': "Mithula",
+    'gender': "male",
     'country': "",
-    'code':'',
-    'city':''
-}
+    'city': '',
+    'longitude': null,
+    'latitude': null
+};
 
-const personTwo ={
-    'name':"",
-    'gender':"female",
+const personTwo = {
+    'name': "",
+    'gender': "female",
     'country': "",
-    'code':'',
-    'city':''
-}
+    'city': '',
+    'longitude': null,
+    'latitude': null
+};
+
 
 localStorage.setItem('personOne', JSON.stringify(personOne));
 localStorage.setItem('personTwo', JSON.stringify(personTwo));
@@ -251,264 +254,221 @@ genderToggle.addEventListener("click", () => {
 }
 
 function getLocationOne() {
-    
     const content = document.getElementById('content');
     content.innerHTML = ''; 
-    const body = document.querySelector('body');
-
-    const bannerElement1 = createElement('img', 'location animation-right');
-    bannerElement1.id = 'location1';
-    bannerElement1.src = 'location1.PNG';
-    
-    const bannerElement2 = createElement('img', 'location animation-right');
-    bannerElement2.id = 'location2';
-    bannerElement2.src = 'location2.PNG'; 
-    
-    body.appendChild(bannerElement1);
-    body.appendChild(bannerElement2);
 
     const profilePicture = document.createElement('img');
     profilePicture.src = 'profile.webp';
     profilePicture.className = 'profile-picture';
     profilePicture.alt = 'Profile Picture';
-   
-    const locationOneLabelContainer = createElement('div','location-one-label-container');
-    const locationOneLabel = createElement('p','location-label');
-    const locationOneSubLabel = createElement('p','location-sub-label');
+
+    const locationOneLabelContainer = createElement('div', 'location-one-label-container');
+    const locationOneLabel = createElement('p', 'location-label');
+    const locationOneSubLabel = createElement('p', 'location-sub-label');
     locationOneSubLabel.id = 'location-sub-label';
-    const profileOneNameElement = createElement('p','profileName');
-    
+
+    const profileOneNameElement = createElement('p', 'profileName');
     const profileOne = JSON.parse(localStorage.getItem('personOne'));
     const profileTwo = JSON.parse(localStorage.getItem('personTwo'));
     
-    if(nextBtnI === 1){
+    if (nextBtnI === 1) {
         sliderUpdate(2);
         profileOneNameElement.innerText = `Hey, ${profileOne.name}` || '';
-        locationOneLabel.innerText = `Let's find your city`;     
-    } else if(nextBtnI === 3){
+        locationOneLabel.innerText = `Let's find your city`;
+        locationOneSubLabel.innerText = "Please select your location";     
+    } else if (nextBtnI === 3) {
         sliderUpdate(4);
-        if(personTwo.gender === 'male'){
+        if (profileTwo.gender === 'male') {
             locationOneLabel.innerText = `Let's find his city`;
             locationOneSubLabel.innerText = "Please select his country first";
-        }else{
+        } else {
             locationOneLabel.innerText = `Let's find her city`;
             locationOneSubLabel.innerText = "Please select her country first";
         }
         profileOneNameElement.innerText = `${profileTwo.name}` || '';
-    }else{
+    } else {
         profileOneNameElement.innerText = '';
     }
-    locationOneSubLabel.innerText = "Please select your country first";
+    
+    
     locationOneLabelContainer.appendChild(profilePicture);
     
-    if(profileOneNameElement.innerText !== ''){
+    if (profileOneNameElement.innerText !== '') {
         locationOneLabelContainer.appendChild(profileOneNameElement);
     }
     locationOneLabelContainer.appendChild(locationOneLabel);
     locationOneLabelContainer.appendChild(locationOneSubLabel);
     content.appendChild(locationOneLabelContainer);
 
-    // Country search panel
-    const countryInputContainer = createElement('div','country-input-container')
-    countryInput = document.createElement('input');
-    countryInput.className = 'my-input';
-    countryInput.id = 'country-input';
-    countryInput.type = 'text';
-    countryInput.placeholder = 'Search for a country...';
+    // Add the map container
+    const mapContainer = createElement('div', 'map');
+    mapContainer.id = 'map';
+    content.appendChild(mapContainer);
 
-    countryAutocompleteList = document.createElement('div');
-    countryAutocompleteList.id = 'country-autocomplete-list';
-    countryAutocompleteList.className = 'autocomplete-items';
-
-    countryInputContainer.appendChild(countryInput);
-    countryInputContainer.appendChild(countryAutocompleteList);
-    content.appendChild(countryInputContainer);
-
-    // City search panel
-    const cityInputContainer = createElement('div','city-input-container');
-    cityInput = document.createElement('input');
-    cityInput.className = 'my-input';
-    cityInput.id = 'city-input';
-    cityInput.type = 'text';
-    cityInput.placeholder = 'Search for a city...';
-    cityInput.disabled = true;
-
-    cityAutocompleteList = document.createElement('div');
-    cityAutocompleteList.id = 'city-autocomplete-list';
-    cityAutocompleteList.className = 'autocomplete-items';
-
-    cityInputContainer.appendChild(cityInput);
-    cityInputContainer.appendChild(cityAutocompleteList);
-    content.appendChild(cityInputContainer);
-
-    // Event listeners
-  // Event listeners
-  countryInput.addEventListener('input', async (event) => {
-    const query = event.target.value;
-
-    if(countryInput.value === ''){
-        cityInput.value = '';
-        cityInput.disabled = true;
-    }
-
-    if (query.length > 0) { // Start searching after 1 characters
-        const countries = await fetchCountries(query); // Fetch countries from API
-        showCountryAutocomplete(countries);
-    } else {
-        countryAutocompleteList.innerHTML = ''; // Clear suggestions if query is too short
-    }
-});
-
-cityInput.addEventListener('input', async (event) => {
-    const query = event.target.value;
-    if (query.length > 0 && selectedCountryCode) { // Check if country is selected
-        const cities = await fetchCities(query, selectedCountryCode); // Fetch cities from API
-        showCityAutocomplete(cities);
-    } else {
-        cityAutocompleteList.innerHTML = ''; // Clear suggestions if query is too short or no country is selected
-    }
-});
-}
-
-//main function fetch
-async function fetchCountries(query) {
-    try {
-        const response = await fetch(`https://restcountries.com/v3.1/all`);
-        const data = await response.json();
-        const countries = data
-            .filter(country => country.name.common.toLowerCase().includes(query.toLowerCase()))
-            .map(country => ({
-                name: country.name.common,
-                code: country.cca2.toLowerCase()
-            }));
-        return countries;
-    } catch (error) {
-        console.error('Error fetching countries:', error);
-    }
-}
-
-async function fetchCities(query, countryCode) {
-    try {
-        const response = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=10&appid=${apiKey}`);
-        const data = await response.json();
-        // console.log('API Response:', data); // Log response for debugging
-        const cities = data
-            .filter(location => location.country.toLowerCase() === countryCode)
-            .map(location => ({
-                name: location.name,
-                country: location.country
-            }));
-        console.log('Filtered Cities:', cities); // Log filtered cities for debugging
-        return cities;
-    } catch (error) {
-        console.error('Error fetching cities:', error);
-    }
-}
-
-
-//main functions for showing suggestions
-
-let currentFocus = -1; //for key navigation
-
-function showCountryAutocomplete(countries) {
-    countryAutocompleteList.innerHTML = ''; // Clear previous suggestions
-    const maxResults = 5; 
-
-    // Loop through the countries, but only display up to 10 results
-    countries.slice(0, maxResults).forEach(country => {
-        const div = document.createElement('div');
-        div.className = 'autocomplete-item';
-        div.innerText = country.name;
-        div.addEventListener('click', () => {
-            selectedCountryCode = country.code; // Save selected country code
-            countryInput.value = country.name;
-            if(nextBtnI === 1){
-                personOne.country = country.name;
-                personOne.code = country.code;
-            } else if(nextBtnI === 3){
-                personTwo.country = country.name;
-                personTwo.code = country.code;
-            }
-            countryAutocompleteList.innerHTML = ''; // Clear suggestions
-           // document.querySelector('.search-panel:nth-child(2)').style.display = 'block'; // Show city search panel
-            cityInput.disabled = false;
-
-            const locSubLabel = document.getElementById('location-sub-label');
-
-            locSubLabel.innerText = `Please enter the full name of the city`;
-
-            cityInput.focus(); 
-            // console.log(personTwo);
-            console.log(selectedCountryCode);
-            
-        });
-        countryAutocompleteList.appendChild(div);
+    // Initialize the Mapbox map
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWl0aHVsYS1jYnciLCJhIjoiY20xYm4zc2p2MXp3OTJsc2pmMnJkbnJ4NCJ9.ojNa7HQQPAeRsnBcwzCbWA';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v12',
+        center: [2.3522, 48.8566],
+        zoom: 9
     });
 
-    countryInput.addEventListener('keydown', function(e) {
-        const items = document.querySelectorAll('.autocomplete-item');
-        if (e.key === 'ArrowDown') {
-            currentFocus++;
-            addActive(items);
-        } else if (e.key === 'ArrowUp') {
-            currentFocus--;
-            addActive(items);
-        } else if (e.key === 'Enter') {
-            e.preventDefault();
-            if (currentFocus > -1) {
-                if (items[currentFocus]) {
-                    items[currentFocus].click();
-                }
+    const markerElement = createElement('div','marker');
+    markerElement.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+        </svg>
+    `;
+    const marker = new mapboxgl.Marker(markerElement)
+        .setLngLat([2.3522, 48.8566])
+        .addTo(map);
+
+    const inputContainer = createElement('div', 'input-container');
+    const searchInputContainer = createElement('div', 'search-input-container');
+    const searchInput = document.createElement('input');
+    searchInput.className = 'search-input';
+    searchInput.placeholder = 'Search for places...';
+    searchInputContainer.appendChild(searchInput);
+    inputContainer.appendChild(searchInputContainer);
+    content.insertBefore(inputContainer, mapContainer); // Place above the map
+
+    // Create a container for autocomplete suggestions
+    const autocompleteList = document.createElement('div');
+    autocompleteList.className = 'autocomplete-list';
+    searchInputContainer.appendChild(autocompleteList);
+    inputContainer.appendChild(searchInputContainer); // Append input container to the content
+
+    // Event listener for searching
+    searchInput.addEventListener('input', async (event) => {
+        const query = event.target.value;
+        autocompleteList.innerHTML = ''; // Clear previous suggestions
+
+        if (query.length > 1) {
+            const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxgl.accessToken}`);
+            const data = await response.json();
+
+            const suggestions = data.features.slice(0, 5); // Limit to 5 suggestions
+
+            if (suggestions.length > 0) {
+                suggestions.forEach(feature => {
+                    const suggestion = document.createElement('div');
+                    suggestion.className = 'autocomplete-item';
+                    suggestion.innerText = feature.place_name;
+
+                    // Add click event to the suggestion
+                    suggestion.addEventListener('click', () => {
+                        const [longitude, latitude] = feature.center;
+                        marker.setLngLat([longitude, latitude]);
+                        map.flyTo({ center: [longitude, latitude], zoom: 13 });
+                        searchInput.value = feature.place_name; // Set input to selected place
+                        autocompleteList.innerHTML = ''; // Clear suggestions after selection
+
+                        // Update personOne with selected location
+                        const selectedCountry = feature.context.find(ctx => ctx.id.includes('country'));
+                        const selectedCity = feature.context.find(ctx => ctx.id.includes('place'));
+
+                        if (nextBtnI === 1) {
+                            personOne.country = selectedCountry ? selectedCountry.text : '';
+                            personOne.city = selectedCity ? selectedCity.text : '';
+                            personOne.longitude = longitude;
+                            personOne.latitude = latitude;
+    
+                            // Save updated personOne object to local storage
+                            localStorage.setItem('personOne', JSON.stringify(personOne));   
+                        } else if (nextBtnI === 3) {
+                            personTwo.country = selectedCountry ? selectedCountry.text : '';
+                            personTwo.city = selectedCity ? selectedCity.text : '';
+                            personTwo.longitude = longitude;
+                            personTwo.latitude = latitude;
+    
+                            // Save updated personTwo object to local storage
+                            localStorage.setItem('personTwo', JSON.stringify(personTwo));
+                        }  
+                    });
+
+                    autocompleteList.appendChild(suggestion);
+                });
             }
         }
     });
-}
 
-//related functions of keydown event listner
+    // Geolocator button
+    const geolocateButton = document.createElement('div');
+    geolocateButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-crosshair" viewBox="0 0 16 16">
+      <path d="M8.5.5a.5.5 0 0 0-1 0v.518A7 7 0 0 0 1.018 7.5H.5a.5.5 0 0 0 0 1h.518A7 7 0 0 0 7.5 14.982v.518a.5.5 0 0 0 1 0v-.518A7 7 0 0 0 14.982 8.5h.518a.5.5 0 0 0 0-1h-.518A7 7 0 0 0 8.5 1.018zm-6.48 7A6 6 0 0 1 7.5 2.02v.48a.5.5 0 0 0 1 0v-.48a6 6 0 0 1 5.48 5.48h-.48a.5.5 0 0 0 0 1h.48a6 6 0 0 1-5.48 5.48v-.48a.5.5 0 0 0-1 0v.48A6 6 0 0 1 2.02 8.5h.48a.5.5 0 0 0 0-1zM8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+    </svg>`;
+    geolocateButton.className = 'geolocate-button';
+    inputContainer.appendChild(geolocateButton);
 
-function addActive(items) {
-    if (!items) return false;
-    removeActive(items);
-    if (currentFocus >= items.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = items.length - 1;
-    items[currentFocus].classList.add('autocomplete-active');
-}
+    geolocateButton.addEventListener('click', async () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(async position => {
+                const longitude = position.coords.longitude;
+                const latitude = position.coords.latitude;
+    
+                marker.setLngLat([longitude, latitude]);
+                map.flyTo({ center: [longitude, latitude], zoom: 13 });
+    
+                console.log('Current Location:', { longitude, latitude });
+    
+                // Reverse geocode to get place name
+                const reverseGeocodeResponse = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${longitude},${latitude}.json?access_token=${mapboxgl.accessToken}`);
+                const reverseGeocodeData = await reverseGeocodeResponse.json();
+                const place = reverseGeocodeData.features[0]; // Get the first result
+    
+                // Update the input box with the place name
+                if (place) {
+                    searchInput.value = place.place_name;
+    
+                    // Update personOne or personTwo with the current location
+                    const selectedCountry = place.context.find(ctx => ctx.id.includes('country'));
+                    const selectedCity = place.context.find(ctx => ctx.id.includes('place'));
+    
+                    if (nextBtnI === 1) {
+                        personOne.country = selectedCountry ? selectedCountry.text : '';
+                        personOne.city = selectedCity ? selectedCity.text : '';
+                        personOne.longitude = longitude;
+                        personOne.latitude = latitude;
+    
+                        // Save updated personOne object to local storage
+                        localStorage.setItem('personOne', JSON.stringify(personOne));
+                    } else if (nextBtnI === 3) {
+                        personTwo.country = selectedCountry ? selectedCountry.text : '';
+                        personTwo.city = selectedCity ? selectedCity.text : '';
+                        personTwo.longitude = longitude;
+                        personTwo.latitude = latitude;
+    
+                        // Save updated personTwo object to local storage
+                        localStorage.setItem('personTwo', JSON.stringify(personTwo));
+                    }
+                }
+            });
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    });
 
-function removeActive(items) {
-    items.forEach(item => item.classList.remove('autocomplete-active'));
-}
+    // Event listener when the marker is dragged
+    marker.on('dragend', function() {
+        const lngLat = marker.getLngLat();
+        console.log('Marker moved to:', lngLat);
 
-function selectCountry(country) {
-    selectedCountryCode = country.code; // Save selected country code
-    countryInput.value = country.name;
-    countryAutocompleteList.innerHTML = ''; // Clear suggestions
-    cityInput.disabled = false;
-    cityInput.focus();
-    console.log(`Selected Country: ${country.name}, Code: ${country.code}`);
-}
+        if(nextBtnI === 1){
+            personOne.longitude = lngLat.lng;
+            personOne.latitude = lngLat.lat;
 
-function showCityAutocomplete(cities) {
-    cityAutocompleteList.innerHTML = ''; // Clear previous suggestions
-    cities.forEach(city => {
-        const div = document.createElement('div');
-        div.className = 'autocomplete-item';
-        div.innerText = `${city.name}, ${city.country}`;
-        div.addEventListener('click', () => {
-            cityInput.value = `${city.name}, ${city.country}`;
-            cityAutocompleteList.innerHTML = ''; 
-            if(nextBtnI === 1){
-                personOne.city = city.name;
-            } else if(nextBtnI === 3){
-                personTwo.city = city.name;
-            }
-        });
-        cityAutocompleteList.appendChild(div);
+            // Save updated personOne object to local storage
+            localStorage.setItem('personOne', JSON.stringify(personOne));
+        }else if(nextBtnI === 3)
+            personTwo.longitude = lngLat.lng;
+            personTwo.latitude = lngLat.lat;
+
+            // Save updated personTwo object to local storage
+            localStorage.setItem('personTwo', JSON.stringify(personTwo));
     });
 }
 
-
-
-//other events
 
 const nextBtn = document.getElementById('next');
 
@@ -575,7 +535,7 @@ function firstNext(){
 
 function SecondNext(){
     //&& personOne.city !== ''
-    if(personOne.code !== ''){
+    if(personOne.latitude){
         console.log("you are good to go");
         const content = document.getElementById('content');
 
@@ -608,24 +568,15 @@ function SecondNext(){
             getInfoTwo();
         },300);
         
-    }else if(personOne.code === ''){
-        const countryInputField = document.getElementById('country-input');
+    }else{
+        const countryInputField = document.querySelector('.search-input');
 
         countryInputField.style.animation = "none";
         countryInputField.offsetHeight; // Trigger reflow
         countryInputField.style.animation = "vibrate 0.2s ";
         console.log("please select a country");
         nextBtnI = 1;
-    }else{
-        const cityInputField = document.getElementById('city-input');
-
-        cityInputField.style.animation = "none";
-        cityInputField.offsetHeight; // Trigger reflow
-        cityInputField.style.animation = "vibrate 0.2s ";
-        console.log("please select a country");
-        nextBtnI = 1;
     }
-    
 }
 
 function ThirdNext(){
@@ -652,7 +603,7 @@ function ThirdNext(){
        
     }else{
 
-        const nameField = document.getElementById('name-input');
+        const nameField = document.querySelector('name-input');
 
         nameField.style.animation = "none";
         nameField.offsetHeight; // Trigger reflow
@@ -663,7 +614,7 @@ function ThirdNext(){
 }
 
 function forthNext(){
-    if(personTwo.name !== ''){
+    if(personOne.latitude){
         console.log("you are good to go");
         const content = document.getElementById('content');
 
@@ -696,7 +647,7 @@ function forthNext(){
        
     }else{
 
-        const nameField = document.getElementById('name-input');
+        const nameField = document.querySelector('.search-input');
 
         nameField.style.animation = "none";
         nameField.offsetHeight; // Trigger reflow
