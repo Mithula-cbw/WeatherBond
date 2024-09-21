@@ -251,7 +251,7 @@ genderToggle.addEventListener("click", () => {
 }
 
 function getLocationOne() {
-    sliderUpdate(2);
+    
     const content = document.getElementById('content');
     content.innerHTML = ''; 
     const body = document.querySelector('body');
@@ -275,22 +275,30 @@ function getLocationOne() {
     const locationOneLabelContainer = createElement('div','location-one-label-container');
     const locationOneLabel = createElement('p','location-label');
     const locationOneSubLabel = createElement('p','location-sub-label');
+    locationOneSubLabel.id = 'location-sub-label';
     const profileOneNameElement = createElement('p','profileName');
     
     const profileOne = JSON.parse(localStorage.getItem('personOne'));
     const profileTwo = JSON.parse(localStorage.getItem('personTwo'));
     
     if(nextBtnI === 1){
+        sliderUpdate(2);
         profileOneNameElement.innerText = `Hey, ${profileOne.name}` || '';
+        locationOneLabel.innerText = `Let's find your city`;     
     } else if(nextBtnI === 3){
-        profileOneNameElement.innerText = `Hey, ${profileTwo.name}` || '';
+        sliderUpdate(4);
+        if(personTwo.gender === 'male'){
+            locationOneLabel.innerText = `Let's find his city`;
+            locationOneSubLabel.innerText = "Please select his country first";
+        }else{
+            locationOneLabel.innerText = `Let's find her city`;
+            locationOneSubLabel.innerText = "Please select her country first";
+        }
+        profileOneNameElement.innerText = `${profileTwo.name}` || '';
     }else{
         profileOneNameElement.innerText = '';
     }
-    
-    locationOneLabel.innerText = `Let's find your city`;
     locationOneSubLabel.innerText = "Please select your country first";
-    locationOneSubLabel.id = 'location-sub-label';
     locationOneLabelContainer.appendChild(profilePicture);
     
     if(profileOneNameElement.innerText !== ''){
@@ -519,11 +527,12 @@ switch(nextBtnI){
         break;
     case 2:
         console.log("third click");
-        // ThirdNext();
+        ThirdNext();
         nextBtnI++;
         break;
     case 3:
         console.log("four click");
+        forthNext();
         nextBtnI++;
         break;
 
@@ -650,6 +659,50 @@ function ThirdNext(){
         nameField.style.animation = "vibrate 0.2s ";
         console.log("please fill the name");
         nextBtnI = 2;
+    }
+}
+
+function forthNext(){
+    if(personTwo.name !== ''){
+        console.log("you are good to go");
+        const content = document.getElementById('content');
+
+        //local storage
+        localStorage.setItem('personTwo', JSON.stringify(personTwo));
+        console.log(localStorage.getItem('personTwo'));
+        content.innerHTML='';
+        content.style.animation ='slid-away-left 1s';
+        
+        setTimeout(()=>{
+            content.style.animation = "none";
+            content.offsetHeight;
+            content.style.animation ='slide-in-right 1s';
+        },600);
+        
+        const tempInfo = createElement('div','temp-div');
+        
+        const tempOne = createElement('p','temp-Person');
+        const tempTwo = createElement('p','temp-person');
+
+        tempOne.innerText = JSON.stringify(JSON.parse(localStorage.getItem('personOne')), null, 2);
+        tempInfo.appendChild(tempOne);
+
+        tempTwo.innerText = JSON.stringify(JSON.parse(localStorage.getItem('personTwo')), null, 2);
+        tempInfo.appendChild(tempTwo);
+
+        content.appendChild(tempInfo);
+
+        
+       
+    }else{
+
+        const nameField = document.getElementById('name-input');
+
+        nameField.style.animation = "none";
+        nameField.offsetHeight; // Trigger reflow
+        nameField.style.animation = "vibrate 0.2s ";
+        console.log("please fill the name");
+        nextBtnI = 3;
     }
 }
 
