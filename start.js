@@ -1,5 +1,5 @@
 const personOne = {
-    'name': "Mithula",
+    'name': "",
     'gender': "male",
     'country': "",
     'city': '',
@@ -487,15 +487,18 @@ switch(nextBtnI){
         break;
     case 2:
         console.log("third click");
-        ThirdNext();
         nextBtnI++;
+        ThirdNext();        
         break;
     case 3:
         console.log("four click");
-        forthNext();
         nextBtnI++;
+        sliderUpdate(5);
+        forthNext();
         break;
-
+    case 4:
+        window.location.href = "app.html";
+        break;
 }
 });
 
@@ -603,7 +606,7 @@ function ThirdNext(){
        
     }else{
 
-        const nameField = document.querySelector('name-input');
+        const nameField = document.getElementById('name-input');
 
         nameField.style.animation = "none";
         nameField.offsetHeight; // Trigger reflow
@@ -629,20 +632,35 @@ function forthNext(){
             content.offsetHeight;
             content.style.animation ='slide-in-right 1s';
         },600);
+        setTimeout(()=>{
+            const title = document.getElementById('title');
+        title.innerText = 'You are good to go!';
+
+        const subTitle = document.getElementById('sub-title');
+        subTitle.innerText = 'Thank you for being patient.';
+        content.style.justifyContent = 'flex-start';
+        const tempInfo = createElement('div', 'temp-div');
+        tempInfo.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                            </svg>`;
+content.appendChild(tempInfo);
+        const nextBtnR = document.getElementById('next');
+        nextBtnR.style.backgroundColor='hsl(120, 75%, 50%)';
+        const tempPerson = createElement('div','temp-person');
+
+        const tempOne = createElement('p', null); // Changed to match casing
+        const tempTwo = createElement('p', null); // Changed to match casing
         
-        const tempInfo = createElement('div','temp-div');
+        tempOne.innerText = 'Your journey together just got a little brighter!';
+        tempOne.id = 'temp1';
+        tempPerson.appendChild(tempOne);
         
-        const tempOne = createElement('p','temp-Person');
-        const tempTwo = createElement('p','temp-person');
-
-        tempOne.innerText = JSON.stringify(JSON.parse(localStorage.getItem('personOne')), null, 2);
-        tempInfo.appendChild(tempOne);
-
-        tempTwo.innerText = JSON.stringify(JSON.parse(localStorage.getItem('personTwo')), null, 2);
-        tempInfo.appendChild(tempTwo);
-
-        content.appendChild(tempInfo);
-
+        tempTwo.innerText = 'stay in sync with the weather, no matter the distance!';
+        tempTwo.id = 'temp2';
+        tempPerson.appendChild(tempTwo);
+        content.appendChild(tempPerson);
+        },1000);
         
        
     }else{

@@ -37,21 +37,16 @@ body{
   display: none;
 }
 
-.Welcome{
- color: var(--white);
- font-family: var(--main-font);
- text-align: center;
- animation: mash-out 1s ease-in-out;
- animation-delay: 4.5s;
-}
-
-#welcome-main{
+.welcome-main{
+  text-align: center;
+  color: var(--white);
   font-size: 4rem;
-  margin-bottom: 15px;
   animation: fade-in 1.7s ease-in-out;
 }
 
-#welcome-sec{
+.welcome-sub{
+  text-align: center;
+  color: var(--white-400);
   font-size: 1.5rem;
   opacity: 0;
   animation: fade-in 1.7s ease-in-out;
@@ -66,30 +61,27 @@ body{
   align-items: center;
   gap: 5px;
   color: var(--white-200);
-  font-size: 12px;
+  font-size: 16px;
   left: 0;
   right: 0;
   bottom: 20px;
   margin: auto;
 }
 
-.hand{
-  width: 180px;
-  position: absolute;
-}
-
-.icon{
-  width: 180px;
-  height: 180px;
-  position: absolute;
-  z-index: 10;
-}
-
 .cloud-container{
   z-index: 5;
-}
+  animation: fade-in 1.7s ease-in-out;
+  }
+
+  .cloud-text{
+   display: flex;
+   flex-direction: column;
+   gap: 40px;
+   color: var(--white);
+  }
 
 .cloud{
+  display: none;
   z-index: 5;
   position: absolute;
   width: 70%;
@@ -97,30 +89,19 @@ body{
   top: 5%;
   left: 15%;
   opacity: 0.8;
-  animation: fade-in 1.5s ease-out;
-}
+  color: var(--white);
+  animation: fade-in 1.7s ease-in-out;
+ }
 
-#cloud-text {
-  top: 40%;
-  left: 30%;
-  color: #FE7994;
-  z-index: 10;
-  width: fit-content;
+
+.cloud-span{
   font-family: var(--main-font);
-  font-size: 2rem;
   font-weight: bold;
-  position: absolute; /* Add this line */
+  font-size: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 40px;
-}
-
-
-#cloud-text p{
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  animation: fade-in 1.7s ease-in-out;
 }
 
 .call-to-action{
@@ -130,6 +111,7 @@ body{
   justify-content: center;
   align-items: center;
   gap: 10px;
+  animation: fade-in 1.7s ease-in-out;
 }
 
 .btn{
@@ -142,6 +124,7 @@ body{
   opacity: 1;
   cursor: pointer;
   gap: 12px;
+  animation: fade-in 1.7s ease-in-out;
 }
 
 #Download-app{
@@ -153,46 +136,14 @@ body{
   color: var(--white);
 }
 
-.icon-1 {
-  top: 10%;
-  left: 15%;
-  width: 250px;
-  height: 250px;
-  animation: appear-icon-1 1.5s ease-in-out;
+
+.mash-out {
+  animation: mash-out 1s forwards;
 }
 
-.icon-2 {
-  bottom: 15%;
-  left: 15%;
-  width: 150px;
-  height: 150px;
-  animation: appear-icon-2 1.5s ease-in-out;
+.cloud-in {
+  animation: fade-in 1s forwards;
 }
-
-.icon-3 {
-  top: 5%;
-  left: 40%;
-  width: 100px;
-  height: 100px;
-  animation: appear-icon-3 1.5s ease-in-out;
-}
-
-.icon-4 {
-  top: 12%;
-  right: 20%;
-  width: 150px;
-  height: 150px;
-  animation: appear-icon-4 1.5s ease-in-out;
-}
-
-.icon-5 {
-  bottom: 35%;
-  right: 20%;
-  width: 150px;
-  height: 150px;
-  animation: appear-icon-5 1.5s ease-in-out;
-}
-
 
 
 @keyframes fade-in{
@@ -201,12 +152,8 @@ body{
     transform: translateY(100px);
   }
 
-  70%{
-    opacity: 0.4;
-  }
-
   100%{
-    opacity: 0.8;
+    opacity: 1;
     transform: translateY(0);
   }
 }
@@ -215,10 +162,6 @@ body{
   0%{
     opacity: 0;
     transform: translateY(100px);
-  }
-
-  70%{
-    opacity: 0.1;
   }
 
   100%{
@@ -237,132 +180,87 @@ body{
   }
 }
 
-@keyframes appear-icon-1 {
-  0% {
-    opacity: 0;
-    transform: translate(-25%, -5%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes appear-icon-2 {
-  0% {
-    opacity: 0;
-    transform: translate(-25%, 10%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes appear-icon-3 {
-  0% {
-    opacity: 0;
-    transform: translate(-10%, -25%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes appear-icon-4 {
-  0% {
-    opacity: 0;
-    transform: translate(20%, -15%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
-@keyframes appear-icon-5 {
-  0% {
-    opacity: 0;
-    transform: translate(30%, 5%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-}
-
 @media (max-width: 600px) {
-  .icon {
-    display: none;
-    /* width: 100px;
-    height: 100px; */
-  }
-
+  
   .cloud-container {
     position: relative;
-    width: 100vw; /* Full width of the viewport */
-    height: 100vh; /* Full height of the viewport, or adjust as needed */
     overflow: hidden; /* Hides any part of the image that overflows */
    
   }
   
   .cloud {
+    z-index: 1;
+    display: block;
     opacity: 0.2;
     position: absolute;
     width: 180%;
     top: 20%;
     left: -40%;
     animation: fade-in-mobile 1s ease-out;
-  }
+  } 
 
-  #cloud-text {
-    max-width: 300px;
-    font-size: 1.5rem;
-    position: absolute;
-    top: 35%;
-    left: 10%;
-    color: var(--white);
-    
-    animation: fade-in 1s ease-out;
+    .cloud-container {
+      z-index: 5;
+      animation: fade-in 1.7s ease-in-out;
+      padding: 0 10px; 
+    }
+  
+    .cloud-text {
+      display: flex;
+      flex-direction: column;
+      gap: 20px; 
+      color: var(--white);
+      text-align: center;
+    }
+  
+
+    .cloud-span {
+      font-family: var(--main-font);
+      font-weight: bold;
+      font-size: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      animation: fade-in 1.7s ease-in-out;
+    }
+  
+    .call-to-action {
+      max-width: 100%; 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px; 
+      animation: fade-in 1.7s ease-in-out;
+    }
+  
+    .btn {
+      width: 100%; 
+      padding: 10px 20px; 
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      cursor: pointer;
+      gap: 10px; 
+      animation: fade-in 1.7s ease-in-out;
+      font-size: 1rem;
+      z-index: 100;
+    }
+  
+    #Download-app {
+      background-color: #ffe749;
+    }
+  
+    #Download-app:hover {
+      background-color: #eea73d;
+      color: var(--white);
+    }
+
+    .welcome-sub{
+      margin-top: 20px;
+    }
   }
   
- 
   
-
-  /* .icon-1 {
-    top: 15%;
-    left: 0;
-    width: 180px;
-    height: 180px;
-  }
-
-  .icon-2 {
-    bottom: 10%;
-    left: 10%;
-    width: 100px;
-    height: 100px;
-  }
-
-  .icon-3 {
-    top: 10%;
-    left: 50%;
-    width: 60px;
-    height: 60px;
-  }
-
-  .icon-4 {
-    top: 15%;
-    right: 5%;
-    width: 100px;
-    height: 100px;
-  }
-
-  .icon-5 {
-    bottom: 17%;
-    right: 10%;
-    width: 100px;
-    height: auto;
-  } */
-
-}
