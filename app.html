@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherBond - Weather together</title>
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+    <section id="hero" class="flex-row">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+          </svg>
+    </section>
+    <section id="card-container">
+        <main class="container">
+            <div class="card top" id="card-1">
+              <div class="temp-card">
+                <div class="city-info">
+                  <h2>San Francisco</h2>
+                  <p>October 20, 2020</p>
+                  <img
+                    src="/weather-img/w1.png"
+                    alt="Sun Half visible ahead of Clouds"
+                       class = "cloudy-img"
+                  />
+                  <h6 class="cloudy-text">Cloudy</h6>
+                </div>
+                <div class="readings">
+                  <span class = "big-text">72</span><span class="degree">&#176;</span>
+                  <div class="sub-readings">
+                    <span class = "medium-text">81<span>&#176;</span> / </span>
+                    <span class = " blue-text medium-text">57<span>&#176;</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card" id="card-2">
+                <div class="temp-card">
+                  <div class="city-info">
+                    <h2>Algeria</h2>
+                    <p>October 20, 2020</p>
+                    <img
+                      src="/weather-img/w1.png"
+                      alt="Sun Half visible ahead of Clouds"
+                         class = "cloudy-img"
+                    />
+                    <h6 class="cloudy-text">Cloudy</h6>
+                  </div>
+                  <div class="readings">
+                    <span class = "big-text">56</span><span class="degree">&#176;</span>
+                    <div class="sub-readings">
+                      <span class = "medium-text">81<span>&#176;</span> / </span>
+                      <span id="blue-text" class = " blue-text medium-text">57<span>&#176;</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </main>
+    </section>
+    <script src="app.js"></script>
+</body>
+</html>
