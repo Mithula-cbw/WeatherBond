@@ -30,13 +30,13 @@ function swapCards(card1, card2) {
 
         card2.style.position = 'absolute';
         card2.style.top = '50px';
-        card2.style.left = 'calc(30% - 25px)';
+        card2.style.left = 'calc(40% - 25px)';
         card2.style.zIndex = 1;
         card2.style.opacity = 0.5;
     } else {
         card1.style.position = 'absolute';
         card1.style.top = '50px';
-        card1.style.left = 'calc(30% - 25px)';
+        card1.style.left = 'calc(40% - 25px)';
         card1.style.zIndex = 1;        
         card1.style.opacity = 0.5;
 

@@ -76,7 +76,7 @@ body {
 }
 
 .card{
-  width: 70%;
+  width: 60%;
   min-height: 100%;
   height: auto;
   position: absolute;
@@ -99,7 +99,7 @@ body {
     background-color: rgb(108, 108, 233);
     top: 50px;
     opacity: 0.5;
-    left: calc(30% - 25px);
+    left: calc(40% - 25px);
     z-index: 1;
 }
 
@@ -179,11 +179,15 @@ body {
       }
       
       .card{
-        width: 70%;
+        width: 60%;
         height: 100%;
         position: absolute;
         display: flex;
         flex-direction: column;
+      }
+
+      #card-2{
+        left: calc(40% - 25px);
       }
       
       
@@ -268,6 +272,7 @@ body {
         align-self: stretch;
         text-align: center;
         padding: 1.5rem;
+        margin-left: -1rem;
       }
       
       .big-text {
