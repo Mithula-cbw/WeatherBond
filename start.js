@@ -362,15 +362,17 @@ function getLocationOne() {
                         marker.setLngLat([longitude, latitude]);
                         map.flyTo({ center: [longitude, latitude], zoom: 13 });
                         searchInput.value = feature.place_name; // Set input to selected place
+
+                        const placeNameParts = feature.place_name.split(',')[0].trim().split(' ');
+                        const limitedPlaceName = placeNameParts.slice(0, 2).join(' '); // Set input to selected place
                         autocompleteList.innerHTML = ''; // Clear suggestions after selection
 
-                        // Update personOne with selected location
+                        // Update personOne 0r personTwo with selected location
                         const selectedCountry = feature.context.find(ctx => ctx.id.includes('country'));
-                        const selectedCity = feature.context.find(ctx => ctx.id.includes('place'));
 
                         if (nextBtnI === 1) {
                             personOne.country = selectedCountry ? selectedCountry.text : '';
-                            personOne.city = selectedCity ? selectedCity.text : '';
+                            personOne.city = limitedPlaceName;
                             personOne.longitude = longitude;
                             personOne.latitude = latitude;
     
@@ -378,7 +380,7 @@ function getLocationOne() {
                             localStorage.setItem('personOne', JSON.stringify(personOne));   
                         } else if (nextBtnI === 3) {
                             personTwo.country = selectedCountry ? selectedCountry.text : '';
-                            personTwo.city = selectedCity ? selectedCity.text : '';
+                            personTwo.city = limitedPlaceName;
                             personTwo.longitude = longitude;
                             personTwo.latitude = latitude;
     
@@ -423,11 +425,12 @@ function getLocationOne() {
     
                     // Update personOne or personTwo with the current location
                     const selectedCountry = place.context.find(ctx => ctx.id.includes('country'));
-                    const selectedCity = place.context.find(ctx => ctx.id.includes('place'));
-    
+                    const placeNameParts = feature.place_name.split(',')[0].trim().split(' ');
+                    const limitedPlaceName = placeNameParts.slice(0, 2).join(' ');
+
                     if (nextBtnI === 1) {
                         personOne.country = selectedCountry ? selectedCountry.text : '';
-                        personOne.city = selectedCity ? selectedCity.text : '';
+                        personOne.city = limitedPlaceName; // Use the value in the input box
                         personOne.longitude = longitude;
                         personOne.latitude = latitude;
     
@@ -435,7 +438,7 @@ function getLocationOne() {
                         localStorage.setItem('personOne', JSON.stringify(personOne));
                     } else if (nextBtnI === 3) {
                         personTwo.country = selectedCountry ? selectedCountry.text : '';
-                        personTwo.city = selectedCity ? selectedCity.text : '';
+                        personTwo.city = limitedPlaceName; // Use the value in the input box
                         personTwo.longitude = longitude;
                         personTwo.latitude = latitude;
     
