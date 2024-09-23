@@ -8,7 +8,12 @@
 </head>
 <body>
   <section class="header">
-
+    <div class="day" id="day">23 Sep 2024</div>
+    <div class="nav-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+      </svg>
+    </div>
   </section>
 
   <!-- the weather card section -->
@@ -24,16 +29,16 @@
                     </div>
                     <div class="time" id="current-time-1">8:45 am</div>
                     <div class="weather-img">
-                        <img id="weather-icon-1" src="/weather-img/w-sunny.png" alt="Weather Icon">
+                        <img id="weather-icon-1" src="weather-img/w-rainy.png" alt="Weather Icon">
                         <div class="weather-tag" id="weather-description-1">Rainy</div>
                     </div>
                 </div>
                 <div class="card-top-right">
                     <div class="temperature" id="temperature-1">28<span class="degree">&#176</span></div>
-                    <div class="temp-feel-like" id="feels-like-1">Feels like:<span id="feels-like-temp-1"> 32&#176</span></div>
+                    <div class="temp-feel-like" id="feels-like-1">Feels like <span id="feels-like-temp-1"> 32&#176</span></div>
                     <div class="temp-min-max">
-                        <span class="temp-min" id="temp-min-1">Min: 19&#176</span>
-                        <span class="temp-max" id="temp-max-1">Max: 34&#176</span>
+                        <span class="temp-min" id="temp-min-1">Min 19&#176</span>
+                        <span class="temp-max" id="temp-max-1">Max 34&#176</span>
                     </div>
                 </div>
             </div>
@@ -83,18 +88,18 @@
     <div class="card" id="card-2">
         <div class="card-inner">
             <div class="card-top">
-                <div class="card-top-left">
+                <div class="card-top-left" id="card-top-left-2">
                     <div class="location">
                         <p class="city" id="city-name-2">Kurunegala</p>
                         <p class="country" id="country-name-2">Sri Lanka</p>
                     </div>
                     <div class="time" id="current-time-2">8:45 am</div>
                     <div class="weather-img">
-                        <img id="weather-icon-2" src="/weather-img/w-sunny.png" alt="Weather Icon">
+                        <img id="weather-icon-2" src="weather-img/w-snow.png" alt="Weather Icon">
                         <div class="weather-tag" id="weather-description-2">Rainy</div>
                     </div>
                 </div>
-                <div class="card-top-right">
+                <div class="card-top-right" id="card-top-right-2">
                     <div class="temperature" id="temperature-2">21<span class="degree">&#176</span></div>
                     <div class="temp-feel-like" id="feels-like-2">Feels like: <span id="feels-like-temp-1"> 32&#176</span></div>
                     <div class="temp-min-max">
@@ -104,7 +109,7 @@
                 </div>
             </div>
             <div class="card-person">
-                <img src="/weather-img/g-sunny.png" alt="">
+                <img src="/weather-img/g-storm.png" alt="">
             </div>
         </div>
     </div>

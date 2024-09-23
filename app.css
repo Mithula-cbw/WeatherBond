@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@200;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap");
+
 *{
   margin: 0;
   padding: 0;
@@ -15,8 +18,8 @@
 --black-300 : rgba(0, 0, 0, 0.7);
 --black-200 : rgba(0, 0, 0, 0.5);
 --black-100 : rgba(0, 0, 0, 0.3);
---main-font: Arial, sans-serif;
---sec-font:"Montserrat" ,Arial;
+--main-font: 'Poppins', sans-serif;
+--sec-font:"Lato" ,Arial;
 --gender-pink :hsl(4, 75%, 80%);
 --gender-bg-pink:#F8F1F7;
 --gender-blue :hsl(235, 75%, 80%);
@@ -25,19 +28,71 @@
 }
 
 body{
+  position: relative;
   width: 100dvw;
   min-height: 100vh;
-  background-color: #000000b7;   
+  background-color: black;
   min-width: 360px;
   overflow-x: hidden;
-  
+  font-family: var(--main-font);
+ 
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover; /* Ensures the image covers the entire background */
+  background-position: center; /* Centers the background image */
+  background-attachment: fixed;
+  background-image: url('weather-img/bg.jpg');
+  filter: blur(2px); /* Adjust the blur level as needed */
+  z-index: -1; /* Places the background behind the content */
+  transform: scale(1.1); /* Prevents edges from becoming visible due to blur */
 }
 
 .header{
   width: 100%;
   height: 60px;
-  background-color: var(--white-100);
+  background-color: #a670bb25 ;
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
+  padding-inline: 20px;
 
+}
+
+.day{
+  font-size: 18px;
+  font-family: var(--sec-font);
+  color: var(--white-200);
+  font-weight: 300;
+}
+
+.nav-btn{
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(135, 133, 133, 0.036);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.192);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav-btn>svg{
+  fill: var(--white-200);
+  width:25px;
+  height: auto;
 }
 
 .card-container{
@@ -54,15 +109,22 @@ body{
   display: flex;
   flex-direction: column;
   background-size: cover;
+  background: linear-gradient(184deg, #17255F 0%, #8B5C9E 100%);
   background-repeat: no-repeat;
   background-position: center;
+  box-shadow: 15px 15px 45px rgba(0, 0, 0, 0.3);
 }
 
 #card-1 {
-  background-color:var(--black-400);
+  background-color:var(--black-200);
   top: 25px;
   left: 40px;
   z-index: 2;
+ 
+}
+
+#card-top-left-2{
+ display: none;
 }
 
 #card-2 {
@@ -70,6 +132,7 @@ body{
   top: 50px;
   left: calc(30% - 25px);
   z-index: 1;
+  opacity: 0.7;
 }
 .card-inner{
   width: 100%;
@@ -143,7 +206,7 @@ body{
 
 .weather-img > img{
   width: auto;
-  height: 80px;
+  height: 100px;
 }
 
 
@@ -158,9 +221,15 @@ body{
   gap: 10px;
 }
 
+#card-top-right-2{
+ width: 100%;
+}
+
 .temperature{
   font-size: 7rem;
   color: var(--white);
+  font-family: var(--sec-font);
+  font-weight: 200;
 }
 
 .degree{
@@ -207,8 +276,8 @@ body{
 .info-card{
   width: 50%;
   padding: 20px;
-  background-color:black;
   border-radius: 20px;
+  background-color: #1b285d47;
   box-shadow: 0 4px 8px rgba(47, 47, 47, 0.192);
   display: flex;
   flex-direction: row;
@@ -440,7 +509,7 @@ body{
   }
 
   .temperature {
-    font-size: 4.5em; 
+    font-size: 5em; 
   }
 
   .degree{
@@ -453,7 +522,7 @@ body{
   .card-person {
     height: 80%;
     width: 100%;
-    height: 180px;
+    height: 260px;
    
   }
 
@@ -469,16 +538,17 @@ body{
   }
 
   .temp-feel-like{
-    margin-right: -10px;
+    margin-right: -5px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 8px;
     align-items: flex-end;
     font-size: 16px;
     color: var(--white-400);
   }
   
   .temp-min-max{
-    margin-right: -10px;
+    margin-right: -5px;
     flex-direction: column;
     justify-content: flex-end;
     gap: 0;
@@ -520,7 +590,7 @@ body{
 
   .card-bottom {
     width: 100%;
-    padding: 20px 20px 20px 10px;
+    padding: 10px 20px 10px 10px;
     display: flex;
     flex-direction: row;
     gap: 10px;
@@ -547,8 +617,7 @@ body{
   
   .info-card {
     width: calc(50% - 5px); /* Adjust the width to fit two cards per row with a gap */
-    
-    background-color: black;
+    flex-grow: 1;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(47, 47, 47, 0.192);
     display: flex;
@@ -584,7 +653,8 @@ body{
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    color: var(--white-300);
+    color: var(--white-300);    
+    font-size: 14px;
   }
   
   .info-content-name {
@@ -607,4 +677,40 @@ body{
   }
   
   
+}
+
+@media (max-width: 420px) {
+  .temp-feel-like{
+    margin-right: -5px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-end;
+    font-size: 16px;
+    color: var(--white-400);
+  }
+
+  .city{
+    color: var(--white-400);
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .country{
+    color: var(--white-200);
+    font-size: 12px;
+    font-weight: 200;
+  }
+  
+  .time{
+    color: var(--white-300);
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .temperature{
+    font-size: 4rem;
+  }
+
+
 }
