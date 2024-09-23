@@ -27,6 +27,7 @@ function swapCards(card1, card2) {
         card1.style.left = '25px';
         card1.style.zIndex = 2;        
         card1.style.opacity = 1;
+        card1.s
 
         card2.style.position = 'absolute';
         card2.style.top = '50px';
@@ -58,3 +59,4 @@ cards.forEach(card => {
         swapCards(card1, card2);
     });
 });
+
