@@ -9,7 +9,6 @@ const getOpenWeatherData = async (latitude, longitude) => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data);
 
         return {
             temp: data.main.temp,
@@ -90,7 +89,7 @@ const createPersonWeatherObjects = async (person) => {
 function updateCardOne(personWeather) {
     document.getElementById('city-name-1').innerText = personWeather.city;
     document.getElementById('country-name-1').innerText = personWeather.country;
-    document.getElementById('current-time-1').innerText = personWeather.weather.time; // Updated to use correct variable
+    document.getElementById('current-time-1').innerText = personWeather.weather.time;
 
     document.getElementById('temperature-1').innerHTML = `<span>${Math.round(personWeather.weather.currentTemp)}</span><span class="degree">&#176</span>`;
     document.getElementById('feels-like-1').innerHTML = `Feels like <span id="feels-like-temp-1"> ${Math.round(personWeather.weather.feelsLike)}&#176</span>`;
@@ -112,6 +111,9 @@ function updateCardTwo(personWeather) {
     document.getElementById('feels-like-2').innerHTML = `Feels like: <span id="feels-like-temp-2">${Math.round(personWeather.weather.feelsLike)}&#176;</span>`;
     document.getElementById('temp-min-2').innerHTML = `Min: ${Math.round(personWeather.weather.minTemperature)}&#176;`;
     document.getElementById('temp-max-2').innerHTML = `Max: ${Math.round(personWeather.weather.maxTemperature)}&#176;`;
+    
+
+    updateWeatherImage(personWeather);
 }
 
 // Example usage in the main function
@@ -165,32 +167,31 @@ fetchWeatherForBothPersons();
 
 // Function to find the current time in GMT based on the provided timezone offset
 const getCurrentTimeInByTimezone = (timezoneOffset) => {
-
     const nowUTC = new Date();
-
-    // Convert the timezone offset from seconds to milliseconds
     const offsetInMilliseconds = timezoneOffset * 1000;
-
-    // Calculate the GMT time based on the offset
     const gmtTime = new Date(nowUTC.getTime() + offsetInMilliseconds);
 
-    // Format the hours and minutes
-    let hours = gmtTime.getUTCHours(); // Use getUTCHours for GMT
-    const minutes = gmtTime.getUTCMinutes(); // Use getUTCMinutes for GMT
+    let hours = gmtTime.getUTCHours();
+    const minutes = gmtTime.getUTCMinutes();
     
-    // Determine AM/PM
     const ampm = hours >= 12 ? ' pm' : ' am';
-    hours = hours % 12; // Convert to 12-hour format
-    hours = hours ? hours : 12; // The hour '0' should be '12'
-
-    // Format minutes to always have two digits
+    hours = hours % 12;
+    hours = hours ? hours : 12;
     const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
 
-    // Return the formatted time
     return `${hours}:${formattedMinutes}${ampm}`;
 };
 
-// Example usage
-const timezoneOffset = 19800; // Example timezone offset in seconds (UTC+5:30)
-const currentGMTTime = getCurrentTimeInByTimezone(timezoneOffset);
-console.log(`Current GMT time: ${currentGMTTime}`);
+const updateWeatherImage = (personWeather) => {
+    const weatherImage = document.getElementById('card-person'); // Make sure to use the correct ID for the image
+    const now = new Date();
+    const hours = now.getUTCHours(); // Get UTC hours
+    const isDayTime = hours >= 6 && hours < 18; // Daytime from 6 AM to 6 PM
+
+    if (personWeather.gender === 'male') {
+        weatherImage.src = isDayTime ? 'weather-img/b-day.png' : 'weather-img/b-night.png'; // Update to day/night image
+    } else {
+        // You can add different conditions for female or other genders if needed
+        weatherImage.src = isDayTime ? 'weather-img/g-day.png' : 'weather-img/g-night.png'; // Update to day/night image for female
+    }
+};
