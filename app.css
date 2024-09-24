@@ -120,6 +120,7 @@ body::before {
   top: 25px;
   left: 40px;
   z-index: 2;
+  animation: float 5s ease-in-out infinite;
  
 }
 
@@ -587,13 +588,13 @@ body::before {
   
   .city{
     color: var(--white-400);
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
   }
   
   .country{
     color: var(--white-200);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 200;
   }
   
@@ -737,5 +738,14 @@ body::before {
   }
   100% {
     transform: translateX(-100%);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-5px);
   }
 }
