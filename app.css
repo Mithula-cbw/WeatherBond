@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@200;300;400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@100..800&display=swap');
 *{
   margin: 0;
   padding: 0;
@@ -24,6 +24,7 @@
 --gender-bg-pink:#F8F1F7;
 --gender-blue :hsl(235, 75%, 80%);
 --gender-bg-blue:#F1F3F8; 
+--bubble-color: #1b285d47;
     
 }
 
@@ -293,7 +294,7 @@ body::before {
   width: 50%;
   padding: 20px;
   border-radius: 20px;
-  background-color: #1b285d47;
+  background-color:var(--bubble-color);
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.455);
   display: flex;
   flex-direction: row;
@@ -363,6 +364,54 @@ body::before {
   position: absolute;
   bottom: 20px;
   right: 30px;
+}
+
+.tips{
+ margin-top: 500px;
+ width: 100%;
+ min-height: 200px;
+ background-color: rgba(57, 57, 57, 0.463);
+ display: block;
+}
+
+.tip-container{
+  position: relative;
+  width: 95%;
+  margin: auto;
+  background: linear-gradient(184deg, #17255fe1 -90%, #8b5c9ecc 100%);
+  box-shadow: 15px 15px 45px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  padding-top: 35px;
+  padding-inline: 25px;
+  padding-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+  color: var(--white-300);
+}
+
+#tip-svg{
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  top: -15px;
+  left: 0;
+}
+
+#tip-svg > svg{
+  width: 30px;
+  height: 30px;
+  fill: var(--white-300);
+}
+
+.tip-content{
+  width: 100%;
+  text-align: center;
+  font-family:'Playpen Sans';
+  font-weight: 400;
+  font-size: 15px;
 }
 
 @media (max-width: 1000px) {
