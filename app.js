@@ -1,3 +1,6 @@
+
+ let weatherCondition;
+
 document.addEventListener('DOMContentLoaded', () => {
     // Function to fetch current weather from OpenWeather
     const getOpenWeatherData = async (latitude, longitude) => {
@@ -10,9 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            const weatherCondition = data.weather[0].main || 'Clouds';
-            localStorage.setItem('condition', weatherCondition);
-            console.log(weatherCondition);
+            weatherCondition = data.weather[0].main || 'Clouds';
+            
 
             return {
                 temp: data.main.temp,
@@ -160,10 +162,10 @@ document.addEventListener('DOMContentLoaded', () => {
         personTwo = {};
     }
 
-    const condition = localStorage.getItem('condition');
     const weatherTipDiv = document.getElementById('tip-content');
-    const tipOfTheLoad = getWeatherTips(personOne.name,personTwo.name,personTwo.gender,condition)
+    const tipOfTheLoad = getWeatherTips(personOne.name,personTwo.name,personTwo.gender,weatherCondition = 'Clouds')
     weatherTipDiv.innerText = tipOfTheLoad;
+    // console.log(weatherCondition);
 
     const fetchWeatherForBothPersons = async () => {
         personOneWeather = await createPersonWeatherObjects(personOne);
