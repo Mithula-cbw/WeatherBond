@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            const weatherCondition = data.weather[0].main;
+            const weatherCondition = data.weather[0].main || 'Clouds';
             localStorage.setItem('condition', weatherCondition);
             console.log(weatherCondition);
 
